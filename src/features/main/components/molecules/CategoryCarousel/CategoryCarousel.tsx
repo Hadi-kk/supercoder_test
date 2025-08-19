@@ -51,46 +51,59 @@ const CategoryCarousel = () => {
   return (
     <div className="container mx-auto py-12 px-4">
       {/* Section heading */}
-      <div className="mb-8">
+      <div className="mb-0">
         <h2 className="text-base font-bold text-neutral-800">
           스타일과 실용성을 모두 담은 시즌 셀렉션
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 items-end justify-items-center">
         {categories.map((cat, idx) => {
           const isActive = idx === activeIndex;
           return (
             <button
               key={cat.id}
-              onClick={() => setActiveIndex(idx)}
-              className={`bg-white rounded-md shadow-md overflow-hidden text-left transition-all duration-300 focus:outline-none`}
-              style={{ transform: isActive ? "scale(1.03)" : undefined }}
+              onMouseEnter={() => setActiveIndex(idx)}
+              onFocus={() => setActiveIndex(idx)}
+              className={`bg-white rounded-lg shadow-md overflow-hidden text-left transition-all duration-300 focus:outline-none inline-block ${
+                isActive ? "rounded-br-[64px]" : ""
+              }`}
             >
               <div
                 className={`${
-                  isActive ? "h-80 sm:h-96" : "h-64 sm:h-73"
-                } w-full relative transition-all duration-300`}
+                  isActive
+                    ? "h-[20rem] sm:h-[480px] max-w-[420px] sm:max-w-[520px]"
+                    : "h-72 sm:h-80 max-w-[260px] sm:max-w-[320px]"
+                } relative transition-all duration-300 mx-auto`}
               >
                 <img
                   src={cat.image}
                   alt={cat.title}
                   className={`w-full h-full object-cover ${
-                    isActive ? "rounded-br-3xl" : ""
+                    isActive ? "rounded-br-[64px]" : ""
                   }`}
                 />
 
                 {/* title overlay on top-left of image for better visual parity */}
-                <div className="absolute top-3 left-3">
+                <div className="absolute top-3 left-3 z-10">
                   <h3 className="text-sm font-semibold text-neutral-900 max-w-40">
                     {cat.title}
                   </h3>
                 </div>
 
                 {/* subtitle overlay at bottom of image (no background) */}
-                <div className="absolute left-3 right-3 bottom-3">
+                <div className="absolute left-3 right-3 bottom-3 z-10">
                   <p className="text-xs text-neutral-900">{cat.subtitle}</p>
                 </div>
+
+                {/* inset light grey top/bottom shadow to improve text contrast */}
+                <div
+                  className="absolute inset-0 pointer-events-none z-0"
+                  style={{
+                    boxShadow:
+                      "inset 0 180px 70px -140px rgba(255, 255, 255, 0.979), inset 0 -40px 40px -5px rgba(234, 234, 234, 0.849)",
+                  }}
+                />
               </div>
             </button>
           );
@@ -98,8 +111,8 @@ const CategoryCarousel = () => {
       </div>
 
       {/* centered progress indicator under all images */}
-      <div className="mt-6 flex justify-center">
-        <div className="w-72 h-2 bg-gray-200 rounded-full overflow-hidden">
+      <div className="mt-12 flex justify-center">
+        <div className="w-72 h-1 bg-gray-200 rounded-full overflow-hidden">
           <div
             className="h-full bg-yellow-400 transition-all duration-500"
             style={{ width: `${progress}%` }}
