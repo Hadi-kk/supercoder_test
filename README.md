@@ -13,9 +13,9 @@ If you are developing a production application, we recommend updating the config
 
 ```js
 export default tseslint.config([
-  globalIgnores(['dist']),
+  globalIgnores(["dist"]),
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
     extends: [
       // Other configs...
 
@@ -30,13 +30,13 @@ export default tseslint.config([
     ],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
         tsconfigRootDir: import.meta.dirname,
       },
       // other options...
     },
   },
-])
+]);
 ```
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
@@ -66,4 +66,18 @@ export default tseslint.config([
     },
   },
 ])
+
+## Dummy account for local testing
+
+A simple dummy account is provided so you can verify the local login/logout flow (all data is stored in localStorage):
+
+- Email: `demo@landas.test`
+- Password: `Demo1234`
+
+To test:
+
+1. Run the dev server: `yarn dev`.
+2. Open the app and go to the Login page ("/login").
+3. Use the credentials above to log in. After successful login the navbar will show the account id and a "로그아웃" button.
+4. Click "로그아웃" to clear the session.
 ```

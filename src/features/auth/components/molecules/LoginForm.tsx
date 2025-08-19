@@ -3,6 +3,10 @@ import AuthInput from "../atoms/AuthInput";
 import AuthCheckbox from "../atoms/AuthCheckbox";
 import BasicButton from "../../../../shared/components/atoms/buttons/BasicButton";
 import clsx from "clsx";
+import { DUMMY_CREDENTIALS } from "@/shared/stores/authStore";
+import useAuthStore from "@/shared/stores/authStore";
+import { useNavigate } from "react-router-dom";
+import { ROUTE_PATH } from "@/routes/routes";
 
 const LoginForm: React.FC = () => {
   const [id, setId] = useState("");
@@ -13,6 +17,8 @@ const LoginForm: React.FC = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const isFormValid = id.length > 0 && password.length > 0;
+  const navigate = useNavigate();
+  const login = useAuthStore((s) => s.login);
 
   const validate = () => {
     let isValid = true;
@@ -38,8 +44,14 @@ const LoginForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Form submitted", { id, password });
-      // Here you would typically handle the login logic
+      // basic dummy auth against DUMMY_CREDENTIALS
+      if (id === DUMMY_CREDENTIALS.id && password === DUMMY_CREDENTIALS.password) {
+        login(id);
+        // navigate to main so Navbar (rendered in MainLayout) is visible with user state
+        navigate(ROUTE_PATH.MAIN);
+      } else {
+        setPasswordError("아이디 또는 비밀번호가 일치하지 않습니다.");
+      }
     }
   };
 

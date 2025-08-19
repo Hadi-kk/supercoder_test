@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Icon from "@/shared/components/atoms/Icon";
 import { iconSrcMapping } from "@/shared/constants/iconSrcMapping";
+import { Link, useNavigate } from "react-router-dom";
+import { ROUTE_PATH } from "@/routes/routes";
+import useAuthStore from "@/shared/stores/authStore";
 
 const navLinks = [
   { name: "SS", href: "#" },
@@ -14,6 +17,44 @@ const navLinks = [
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const user = useAuthStore((s) => s.user);
+
+  const AuthControls: React.FC<{ isMobile?: boolean }> = ({ isMobile }) => {
+    const { logout } = useAuthStore();
+    const navigate = useNavigate();
+    if (!user) {
+      return (
+        <Link
+          to={ROUTE_PATH.LOGIN}
+          className={`text-white text-lg hover:text-yellow-400 transition-colors ${
+            isMobile ? "" : "hidden md:inline"
+          }`}
+        >
+          로그인
+        </Link>
+      );
+    }
+    return (
+      <div
+        className={`flex items-center space-x-3 ${
+          isMobile ? "" : "hidden md:flex"
+        }`}
+      >
+        <span className="text-white text-sm truncate max-w-[160px]">
+          {user.id}
+        </span>
+        <button
+          onClick={() => {
+            logout();
+            navigate(ROUTE_PATH.MAIN);
+          }}
+          className="text-white text-sm hover:text-yellow-400 underline"
+        >
+          로그아웃
+        </button>
+      </div>
+    );
+  };
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-black h-[64px]">
@@ -58,9 +99,7 @@ const Navbar = () => {
               alt="Search"
               className="h-6 w-6 text-white hover:text-yellow-400 transition-colors"
             />
-            <span className="hidden md:inline text-white text-lg hover:text-yellow-400 transition-colors">
-              로그아웃
-            </span>
+            <AuthControls />
             {/* mobile menu button */}
             <button
               className="md:hidden ml-2 p-2"
@@ -141,7 +180,7 @@ const Navbar = () => {
                   alt="User"
                   className="h-6 w-6 text-white"
                 />
-                <button className="text-white">로그아웃</button>
+                <AuthControls isMobile />
               </div>
             </div>
           </aside>
