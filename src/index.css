@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root{
+  --font-zen-dots: 'Zen Dots', sans-serif;
+  --font-pretendard: 'Pretendard', sans-serif;
+}
+
+.font-zen-dots{ font-family: var(--font-zen-dots) !important; }
+.font-pretendard{ font-family: var(--font-pretendard) !important; }
+
+/* Custom scrollbar: white/30 track, yellow thumb */
+html {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #fbbf24 rgba(255,255,255,0.3);
+}
+
+/* WebKit browsers */
+html::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+html::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.3);
+}
+html::-webkit-scrollbar-thumb {
+  background: #fbbf24; /* Tailwind yellow-400 */
+  border-radius: 9999px;
+}
+html::-webkit-scrollbar-corner {
+  background: transparent;
+}
