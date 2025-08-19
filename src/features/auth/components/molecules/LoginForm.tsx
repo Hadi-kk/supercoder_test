@@ -45,7 +45,10 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
     if (validate()) {
       // basic dummy auth against DUMMY_CREDENTIALS
-      if (id === DUMMY_CREDENTIALS.id && password === DUMMY_CREDENTIALS.password) {
+      if (
+        id === DUMMY_CREDENTIALS.id &&
+        password === DUMMY_CREDENTIALS.password
+      ) {
         login(id);
         // navigate to main so Navbar (rendered in MainLayout) is visible with user state
         navigate(ROUTE_PATH.MAIN);
